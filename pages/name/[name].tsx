@@ -53,12 +53,15 @@ const PokemonByNamePage: NextPage<Props> = ({ pokemon }) => {
             <Card.Header
               css={{ display: "flex", justifyContent: "space-between" }}
             >
-              <Text h1 transform="capitalize" 
-              css={{
-                textOverflow: "ellipsis",
-                overflow: "hidden",
-                whiteSpace: "nowrap",
-              }}>
+              <Text
+                h1
+                transform="capitalize"
+                css={{
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                }}
+              >
                 {pokemon.name}
               </Text>
               <Button
@@ -118,22 +121,23 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
         name: pokemon.name,
       },
     })),
-    fallback: 'blocking',
+    fallback: "blocking",
   };
 };
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { name } = params as { name: string };
   const pokemon = await getPokemonInfo(name);
-  if (!pokemon) return { 
-    redirect: {
-      destination: '/', // Redirecciona a la pagina principal
-      permanent: false
-    }
-  }
+  if (!pokemon)
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    }; // si no existe el pokemon
   return {
     props: {
       pokemon,
-      revalidate:86400  
+      revalidate: 86400,
     },
   };
 };
